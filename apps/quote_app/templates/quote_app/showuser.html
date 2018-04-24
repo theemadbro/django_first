@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Page!</title>
+	<style type="text/css">
+		.left {
+			vertical-align: top;
+			display: inline-block;
+		}
+		.right {
+			display: inline-block;
+			margin-left: 400px;
+		}
+	</style>
+</head>
+<body>
+	<div class="left">
+		<h1>Look, it's {{ user.name }}!</h1>
+		<h3>They've Uploaded {{count}} quotes!</h3>
+
+		{% for quote in useruploads %}
+			<p"><span style="color:red;">{{ quote.quoted_by }}: </span>{{ quote.quote }}</p>
+		{% endfor %}
+	</div>
+	<div class="right">
+		<p><a href="/quotes">Back to Quotes</a>  |  <a href="/logout">Logout</a></p>
+	</div>
+
+</body>
+</html>

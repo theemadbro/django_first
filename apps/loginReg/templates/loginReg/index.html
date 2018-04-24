@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login and Register</title>
+	<style type="text/css">
+		td.right {
+			padding-left: 25px;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<td><h1>Login</h1></td>
+	</table>
+	<form action="/" method="POST">
+    {% csrf_token %}
+		<table>
+			<tr>
+				<td>Email</td>
+				<td class="right"><input type="text" name="inemail" required=""></td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td class="right"><input type="password" name="inpass" required=""></td>
+			</tr>
+		</table>
+		<br>
+		<input type="submit" name="submit" value="Log In">
+		<a href="/logout" style="display: inline-block; margin-left: 20px"><button>Log Out</button></a>
+	</form>
+	<br>
+	{% if messages %}
+		{% for error in messages %}
+			<span style="color: red">*{{error}}*</span>
+		{% endfor %}
+	{% endif %}
+
+	<h1>Register</h1>
+    
+    <form action="/" method="POST">
+    {% csrf_token %}
+    <table>
+    	<tr id="NAME">
+    		<td>Name</td>
+    		<td class="right">{{ form.name }}</td>
+    	</tr>
+        <tr id="USERNAME">
+            <td>Alias</td>
+            <td class="right">{{ form.username }}</td>
+        </tr>
+        <tr id="EMAIL">
+        	<td>Email</td>
+        	<td class="right">{{ form.email }}</td>
+        </tr>
+        <tr id="PASSWORD">
+            <td>Password</td>
+            <td class="right">{{ form.password }}</td>
+        </tr>
+        <tr id="PASSCHECK">
+            <td>Confirm Pass</td>
+            <td class="right">{{ form.passcheck }}</td>
+        </tr>
+        <tr>
+        	<td>{{ form.birthday }}</td>
+        </tr>
+    </table>
+    <input type="submit" value="Register" />
+</form>
+
+</body>
+</html>

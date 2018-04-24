@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>quotes_home</title>
+	<style type="text/css">
+		.left {
+			display: inline-block;
+			vertical-align: top;
+		}
+		.right {
+			display: inline-block;
+			margin-left: 300px;
+		}
+		.quotes {
+			background-color: white;
+			width: 300px;
+			padding: 10px;
+			border: 1px solid black;
+			margin-bottom: 15px;
+			word-wrap: break-word;
+		}
+		.holder{
+			background-color: lightgrey;
+			height: 450px;
+			width: 350px;
+			padding: 15px 25px 15px 15px;
+			border: 1px solid black;
+			overflow: auto;
+		}
+		.smallify {
+			font-size: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div>
+		<h2 style="display: inline-block; ">Welcome, {{ request.session.user }}!</h2><a href="/logout" style="display: inline-block; margin-left: 400px"><button>Log Out</button></a>
+			
+		</div>
+		<div class="left">
+			<h3>Quotable Quotes</h3>
+			<div class="holder">
+				{% for quote in quotelist %}
+					<div class="quotes">
+						<p>{{ quote.quote }}</p>
+						<p>- {{ quote.quoted_by }}</p>
+			    		<p class="smallify">Posted by <a href="/user/{{quote.uploader.id}}">{{ quote.uploader.name }}</a><a style="padding-left: 15px;" href="/quotes/add/{{quote.id}}"><button>Add as Favorite</button></a></p>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="right">
+			<h3>Your Favorites</h3>
+			<div class="holder">
+				{% for fav in userfavorites %}
+					<div class="quotes">
+						<p>{{ fav.quote }}</p>
+						<p>- {{ fav.quoted_by }}</p>
+						<p class="smallify">Posted by <a href="/user/{{fav.uploader.id}}">{{ fav.uploader.name }}</a><a style="padding-left: 15px;" href="/quotes/remove/{{fav.id}}"><button>Remove Favorite</button></a></p>
+					</div>
+				{% endfor %}	
+			</div>
+
+			<h4 style="margin-top: 50px; ">Contribute A Quote:</h4>
+			<form action="/quotes" method="POST">
+				{% csrf_token %}
+				<table>
+					<tr>
+						<td>Quoted by:</td>
+						<td>{{ form.name }}</td>
+					</tr>
+					<tr>
+						<td>Message:</td>
+						<td>{{ form.quote }}</td>
+					</tr>
+					<tr>
+						<td><input type="submit" name="submit" value="submit"></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
